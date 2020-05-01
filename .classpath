@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="nets150project/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="apache/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="apache/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="apache/fluent-hc-4.5.12.jar"/>
+	<classpathentry kind="lib" path="apache/httpclient-4.5.12.jar"/>
+	<classpathentry kind="lib" path="apache/httpclient-cache-4.5.12.jar"/>
+	<classpathentry kind="lib" path="apache/httpclient-osgi-4.5.12.jar"/>
+	<classpathentry kind="lib" path="apache/httpclient-win-4.5.12.jar"/>
+	<classpathentry kind="lib" path="apache/httpcore-4.4.13.jar"/>
+	<classpathentry kind="lib" path="apache/httpmime-4.5.12.jar"/>
+	<classpathentry kind="lib" path="apache/jna-4.5.2.jar"/>
+	<classpathentry kind="lib" path="apache/jna-platform-4.5.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
