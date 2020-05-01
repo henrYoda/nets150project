@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="apache/httpmime-4.5.12.jar"/>
 	<classpathentry kind="lib" path="apache/jna-4.5.2.jar"/>
 	<classpathentry kind="lib" path="apache/jna-platform-4.5.2.jar"/>
+	<classpathentry kind="lib" path="json/json-20190722.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
