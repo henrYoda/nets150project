@@ -5,15 +5,15 @@ import java.util.Scanner;
  * A class to represent Penn classes
  * Should store Pre-reqs as children, class title, class description
  */
-public class Class {
+public class Course {
 
     String title;
     String description;
-    Class[] prereqs;
+    Course[] prereqs;
 
     HashMap<String, Integer> wordFreq;
 
-    public Class(String title, String description, Class[] prereqs) {
+    public Course(String title, String description, Course[] prereqs) {
         this.title = title;
         this.description = description;
         this.prereqs = prereqs;
