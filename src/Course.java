@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -28,14 +29,19 @@ import java.util.Set;
 public class Course {
 
     private String courseID;
+    private String description;
+    private String title;
     private List<String> prereqs;
 
-    HashMap<String, Integer> wordFreq;
+    Map<String, Integer> wordFreq;
 
     public Course(String courseID, String title, String description, List<String> prereqs) {
         this.courseID = courseID;
         this.prereqs = prereqs;
-
+        this.title = title;
+        this.description = description;
+        
+        wordFreq = new HashMap<String, Integer>();
         populateWordFreq(title);
         populateWordFreq(description);
     }

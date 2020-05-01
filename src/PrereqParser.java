@@ -10,6 +10,8 @@ public class PrereqParser {
         toParse = toParse.replaceAll("or", "");
         toParse = toParse.replaceAll("prerequisites", "");
         toParse = toParse.replaceAll(":", "");
+        toParse = toParse.replace("(", "");
+        toParse = toParse.replace(")", "");
         toParse = toParse.replace(".", "");
         toParse = toParse.replaceAll("and", "");
         toParse = toParse.replaceAll("&", "");

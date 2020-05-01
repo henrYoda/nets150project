@@ -17,13 +17,13 @@ public class CourseFetcher {
 
     private final static CloseableHttpClient httpClient = HttpClients.createDefault();
     
+    //Authentication details needed to interface with Penn API
     private static String AUTH_ID = "UPENN_OD_enAW_1004944";
     private static String AUTH_PASSWORD = "5rbpm575cgmmn5btonf49i3p7l";
 
     public static void main(String[] args) throws IOException {
-        
-        
         Map<String, Course> courseMap = fetchAndBuildCourseMap();
+        System.out.println(courseMap.keySet());
     }
     
     /**
@@ -58,6 +58,7 @@ public class CourseFetcher {
     }
     /**
      * This function will fetch all of the courses from each department and extract the relevant data.
+     * It will return a map relating course ID's to a corresponding Course object.
      * @author Henrique Lorente
      * @return a map relating course ID's (e.g. "MATH 104") with their respective Course objects
      * @throws IOException
@@ -71,7 +72,8 @@ public class CourseFetcher {
         //Get all the courses in each department
         for (String department : departmentList) {
             System.out.println("Department: " + department);
-            HttpGet httpget = new HttpGet("https://esb.isc-seo.upenn.edu/8091/open_data/course_info/" + department + "?&number_of_results_per_page=1000");
+            HttpGet httpget = new HttpGet("https://esb.isc-seo.upenn.edu/8091/open_data/course_info/" 
+            + department + "?&number_of_results_per_page=1000");
             
             httpget.setHeader("Authorization-Bearer", AUTH_ID);
             httpget.setHeader("Authorization-Token", AUTH_PASSWORD);
