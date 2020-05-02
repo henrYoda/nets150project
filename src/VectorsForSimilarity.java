@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -12,9 +13,11 @@ public class VectorsForSimilarity {
      */
     private HashMap<String, HashMap<String, Double>> tfIdfWeights;
 
+    private HashMap<String, Course> courseMap;
 
-    public VectorsForSimilarity(Corpus corpus) {
+    public VectorsForSimilarity(Corpus corpus, HashMap<String, Course> courseMap) {
         this.corpus = corpus;
+        this.courseMap = courseMap;
         tfIdfWeights = new HashMap<>();
 
         createTfIdfWeights();
@@ -80,11 +83,74 @@ public class VectorsForSimilarity {
     /**
      * This will return the cosine similarity of two documents.
      * This will range from 0 (not similar) to 1 (very similar).
-     * @param c1 Document 1
-     * @param c2 Document 2
+     * @param c1String CourseID of the course being compared to search term
+     * @param search The course object of the search input
      * @return the cosine similarity
      */
-    public double cosineSimilarity(Course c1, Course c2) {
-        return getDotProduct(c1, c2) / (getMagnitude(c1) * getMagnitude(c2));
+    public double cosineSimilarity(String c1String, Course search) {
+        Course c1 = courseMap.get(c1String);
+        return getDotProduct(c1, search) / (getMagnitude(c1) * getMagnitude(search));
+    }
+
+    /**
+     * Helper function for getTenMostSimilar. Finds the smallest value in a hashmap of
+     * courseID strings mapped to their similarity with the search course
+     * @param topTen The current topTen most similar courses
+     * @return The least similar class in this top ten.
+     */
+    String minSimilarity(HashMap<String, Double> topTen) {
+        Set<String> courseSet = topTen.keySet();
+        double minSimilarity = Double.MAX_VALUE;
+        String minCourse = "";
+        for (String courseString : courseSet) {
+            if (topTen.get(courseString) < minSimilarity) {
+                minSimilarity = topTen.get(courseString);
+                minCourse = courseString;
+            }
+        }
+        return minCourse;
+    }
+
+
+    /**
+     * Method that returns the top ten most similar courses to the input search
+     * @param search The input search as a course object
+     * @return An ordered arrayList with the most similar course first and least similar
+     * tenth.
+     */
+    ArrayList<String> getTenMostSimilar(Course search) {
+        HashMap<String, Double> topTen = new HashMap<>();
+        String minRelevantCourse = "";
+        for (String courseString : courseMap.keySet()) {
+            double currSimilarity = cosineSimilarity(courseString, search);
+            if (topTen.size() < 10) {
+                topTen.put(courseString, currSimilarity);
+                minRelevantCourse = minSimilarity(topTen);
+            } else {
+                if (currSimilarity > topTen.get(minRelevantCourse)) {
+                    topTen.remove(minRelevantCourse);
+                    topTen.put(courseString, currSimilarity);
+                    minRelevantCourse = minSimilarity(topTen);
+                }
+            }
+        }
+
+        ArrayList<String> topTenFinal = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            double currMin = Double.MAX_VALUE;
+            String currMinString = "";
+            for (String courseString : topTen.keySet()) {
+                double curr = topTen.get(courseString);
+                if (curr < currMin) {
+                    currMin = curr;
+                    currMinString = courseString;
+                }
+            }
+            topTen.remove(currMinString);
+            topTenFinal.add(0, currMinString);
+        }
+
+        return topTenFinal;
     }
 }
