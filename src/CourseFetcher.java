@@ -20,11 +20,6 @@ public class CourseFetcher {
     //Authentication details needed to interface with Penn API
     private static String AUTH_ID = "UPENN_OD_enAW_1004944";
     private static String AUTH_PASSWORD = "5rbpm575cgmmn5btonf49i3p7l";
-
-    public static void main(String[] args) throws IOException {
-        Map<String, Course> courseMap = fetchAndBuildCourseMap();
-        System.out.println(courseMap.keySet());
-    }
     
     /**
      * This method will fetch a list of all course departments there are at Penn (like CIS, ACCT, MATH, etc.)
@@ -64,6 +59,8 @@ public class CourseFetcher {
      * @throws IOException
      */
     public static Map<String, Course> fetchAndBuildCourseMap() throws IOException {
+        
+        System.out.println("Fetching course data...");
         //Fetch list of departments at Penn
         ArrayList<String> departmentList = getCourseDepartments();
         
@@ -71,7 +68,6 @@ public class CourseFetcher {
         
         //Get all the courses in each department
         for (String department : departmentList) {
-            System.out.println("Department: " + department);
             HttpGet httpget = new HttpGet("https://esb.isc-seo.upenn.edu/8091/open_data/course_info/" 
             + department + "?&number_of_results_per_page=1000");
             
@@ -107,6 +103,7 @@ public class CourseFetcher {
             }
             
         }
+        System.out.println("Done!");
         return courseMap;
     }
 }
