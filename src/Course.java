@@ -29,8 +29,6 @@ import java.util.Set;
 public class Course {
 
     private String courseID;
-    private String description;
-    private String title;
     private List<String> prereqs;
 
     Map<String, Integer> wordFreq;
@@ -38,10 +36,8 @@ public class Course {
     public Course(String courseID, String title, String description, List<String> prereqs) {
         this.courseID = courseID;
         this.prereqs = prereqs;
-        this.title = title;
-        this.description = description;
         
-        wordFreq = new HashMap<String, Integer>();
+        wordFreq = new HashMap<>();
         populateWordFreq(title);
         populateWordFreq(description);
     }
