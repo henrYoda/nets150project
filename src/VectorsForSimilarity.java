@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class VectorsForSimilarity {
@@ -13,12 +16,12 @@ public class VectorsForSimilarity {
      */
     private HashMap<String, HashMap<String, Double>> tfIdfWeights;
 
-    private HashMap<String, Course> courseMap;
+    private Map<String, Course> courseMap;
 
-    public VectorsForSimilarity(Corpus corpus, HashMap<String, Course> courseMap) {
+    public VectorsForSimilarity(Corpus corpus, Map<String, Course> courseMap) {
         this.corpus = corpus;
         this.courseMap = courseMap;
-        tfIdfWeights = new HashMap<>();
+        tfIdfWeights = new HashMap<>(courseMap.size());
 
         createTfIdfWeights();
     }
@@ -32,15 +35,18 @@ public class VectorsForSimilarity {
 
         for (String courseString : corpus.getCourses().keySet()) {
             Course currCourse = corpus.getCourses().get(courseString);
-            HashMap<String, Double> weights = new HashMap<String, Double>();
-
+            HashMap<String, Double> weights = new HashMap<String, Double>(terms.size());
             for (String term : terms) {
                 double tf = currCourse.getWordFreq(term);
                 double idf = corpus.getInverseDocumentFrequency(term);
-
                 double weight = tf * idf;
-
-                weights.put(term, weight);
+                
+                //No need to store the weight and term if the weight is 0 - in fact, if we do,
+                //way, way too much memory is used and the program throws a java memory error
+                //- Henrique
+                if (weight != 0) {
+                    weights.put(term, weight);
+                }
             }
             tfIdfWeights.put(courseString, weights);
         }
@@ -73,8 +79,9 @@ public class VectorsForSimilarity {
         HashMap<String, Double> weights1 = tfIdfWeights.get(c1.getCourseID());
         HashMap<String, Double> weights2 = tfIdfWeights.get(c2.getCourseID());
 
+        //Modification needed since we do not save terms with a weight of 0 for space reasons - Henrique
         for (String term : weights1.keySet()) {
-            product += weights1.get(term) * weights2.get(term);
+            product += weights1.get(term) * (weights2.containsKey(term) ? weights2.get(term) : 0);
         }
 
         return product;

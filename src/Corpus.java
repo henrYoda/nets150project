@@ -1,16 +1,16 @@
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Corpus {
 
-    private HashMap<String, Course> courseMap;
+    private Map<String, Course> courseMap;
 
     // Instead of using the course objects we will keep track of them using their string identifiers
     HashMap<String, Set<String>> invertedIndex;
 
-    public Corpus(HashMap<String, Course> courseMap) {
+    public Corpus(Map<String, Course> courseMap) {
         this.courseMap = courseMap;
         invertedIndex = new HashMap<>();
 
@@ -65,9 +65,9 @@ public class Corpus {
      *               that are most similar to this string. This string's terms need to be included
      *               in the corpus, however, for an accurate comparison.
      */
-    public void addSearchToCorpus(Course search) {
+    public void addSearchToCorpus(Course search, Map<String, Course> cMap) {
         Set<String> terms = search.getTermList();
-
+        cMap.put(search.getCourseID(), search);
         for (String term : terms) {
             if (invertedIndex.containsKey(term)) {
                 Set<String> list = invertedIndex.get(term);
@@ -90,7 +90,7 @@ public class Corpus {
     /**
      * @return the courseID strings
      */
-    public HashMap<String, Course> getCourses() {
+    public Map<String, Course> getCourses() {
         return courseMap;
     }
 

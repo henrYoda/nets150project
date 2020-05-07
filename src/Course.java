@@ -30,12 +30,15 @@ public class Course {
 
     private String courseID;
     private List<String> prereqs;
-
+    private String description;
+    private String title;
     Map<String, Integer> wordFreq;
 
     public Course(String courseID, String title, String description, List<String> prereqs) {
         this.courseID = courseID;
         this.prereqs = prereqs;
+        this.title = title;
+        this.description = description;
         
         wordFreq = new HashMap<>();
         populateWordFreq(title);
@@ -50,7 +53,8 @@ public class Course {
      */
     public Course(String search) {
         this.courseID = "Search";
-
+        wordFreq = new HashMap<>();
+        
         populateWordFreq(search);
     }
 
@@ -105,5 +109,13 @@ public class Course {
 
     public List<String> getPrereqs() {
         return prereqs;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public String getTitle() {
+        return title;
     }
 }
