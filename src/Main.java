@@ -77,25 +77,8 @@ public class Main {
             System.out.print(c + (i != courses.size() - 1 ? " -> " : ""));
         }
         System.out.println();
+        System.out.println();
         System.out.println("Thanks for using our program! Made by Henrique, Pranav and Kit.");
-        /*
-        while (!input.equals("quit")) {
-            PrereqBuilder builder = new PrereqBuilder(input, courseMap);
-            System.out.println("Here is the order of courses you need to take before you take " + input + ":");
-            
-            List<String> courses = builder.getTopologicalSorting();
-            
-            for (int i = 0; i < courses.size(); i++) {
-                String c = courses.get(i);
-                System.out.print(c + (i != courses.size() - 1 ? " -> " : ""));
-            }
-            System.out.println();
-            System.out.println();
-            System.out.println("Please enter a course title (e.g. MATH 104) or type \"quit\" to exit");
-            input = sc.nextLine();
-        }
-        System.out.println("Thank you for using our program.");
-        sc.close();*/
     }
     
     /**
