@@ -1,0 +1,41 @@
+Name of the Project: Penn Course Helper
+GitHub: https://github.com/henrYoda/nets150project
+Group members: Pranav Aurora, Henrique Lorente, Christopher (Kit) Wiggin.  
+
+Description:
+We have built a program that is designed to help users choose courses to take at Penn based on their interests. 
+There are a few different components. The first is retrieving the information for each course Penn offers from the Penn OpenData API.
+The data is extracted in the form of JSON. We are interested in the course title and course description as this is how we will determine 
+what a course’s content is. We are also interested in the pre-requisites that each course has. A user can then search for a topic they are 
+interested in, for example “Machine Learning”. We use concepts from homework 4 to check for vector similarity between the search string and 
+every course. As such the program will return the 9 most similar courses to the search term. The user will then pick a course from this set 
+that they think will be interesting and want to take at some point in the future. The program will then return details of the course they 
+have selected. Most importantly, the program will return the pre-requisite classes for the class the user wants to take as well as any 
+pre-requisite classes of those prereqs. That is, the program will tell the user every course that they need to take before taking the class 
+they selected. The program does this using graph algorithms as follows. It will create a graph where each course represents a node, and there 
+is a directed edge from node v to u if u is a prerequisite of v. We first run a BFS traversal starting at the node that was searched 
+(the course the user is interested in and wants to take in the future). On the BFS tree that is outputted, we do a topological sort to 
+get the relative ordering the courses need to be taken in to satisfy the prerequisites. In this way the user will be able to see which 
+courses they must take and roughly which order they must be taken in order to one day take the course they selected from their original search.
+
+Topics used:
+Graph and graph algorithms
+Document search
+Advanced topics and information networks (using JSON and Apache to extract data from an API)
+
+Work breakdown:
+
+Henrique: Worked mainly on the Main and CourseFetcher class. Henrique worked on the overall user interaction with the program (Main.class). 
+Henrique also worked on CourseFetcher.class, which uses Apache and JSON to get all the course data we need from the Penn OpenData API. 
+Henrique contributed to the overall design of the Course graph structure and also made small contributions to the document search.
+
+Pranav: Worked on the graph algorithms used in the program. Pranav worked on the PrereqBuilder.class and the PrereqParser.class. 
+Pranav made the traversal algorithm in PrereqBuilder.class, which is a BFS algorithm. Pranav also made the algorithm that topologically 
+sorts the graph of prerequisites. Pranav also made the PrereqParser, which makes use of String manipulation to effectively clean and extract 
+the prerequisites of each course in the CourseFetcher class.
+
+Kit: Worked on the information retrieval and Course class. Kit worked on the Course.class, Corpus.class, and VectorForSimilarity.class. 
+Kit made use of information retrieval algorithms such as cosine similarity to allow us to search for relevant courses using keywords. 
+He also made the Course class which is essential to the structure of the program and stores information about each Course, as well as keep 
+track of its text so that a Corpus can be built up in Corpus.class.
+
